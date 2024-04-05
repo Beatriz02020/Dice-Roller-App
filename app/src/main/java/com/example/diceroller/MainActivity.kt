@@ -10,10 +10,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -44,7 +46,9 @@ fun DiceRollerApp() {
 }
 @Composable
 fun DiceWithButtonAndImage(modifier: Modifier = Modifier) {
+    var textField by remember { mutableStateOf("") }
     var result by remember { mutableIntStateOf(1) }
+    var sucesso by remember { mutableStateOf("Adivinhe o Numero") }
     val imageResource = when (result) {
         1 -> R.drawable.dice_1
         2 -> R.drawable.dice_2
@@ -63,8 +67,25 @@ fun DiceWithButtonAndImage(modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(onClick = { result = (1..6).random() }) {
+        Text(
+            "$sucesso"
+        )
+        Button(onClick = {
+            result = (1..6).random()
+            sucesso = when(result.toString()){
+                textField->"Parabens Você Acertou!!"
+                else-> "Tente Novamente"
+            }
+        }) {
             Text(stringResource(R.string.roll))
         }
+
+        OutlinedTextField(
+            value = textField,
+            onValueChange={textField = it},
+            label = {Text(stringResource(R.string.guess_label))}
+        )
+
     }
 }
+
