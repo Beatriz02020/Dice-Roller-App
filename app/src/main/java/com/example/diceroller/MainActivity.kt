@@ -61,20 +61,22 @@ fun DiceWithButtonAndImage(modifier: Modifier = Modifier) {
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text(
+            "$sucesso"
+        )
         Image(
             painter = painterResource(imageResource),
             contentDescription = result.toString()
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text(
-            "$sucesso"
-        )
+
         Button(onClick = {
             result = (1..6).random()
-            sucesso = when(result.toString()){
-                textField->"Parabens Você Acertou!!"
-                else-> "Tente Novamente"
+            sucesso = when(textField){
+                result.toString()->"Parabens Você Acertou!!"
+                "1","2","3","4","5","6" -> "Errado, Tente Novamente"
+                else -> "Digite um Numero de 1 a 6"
             }
         }) {
             Text(stringResource(R.string.roll))
